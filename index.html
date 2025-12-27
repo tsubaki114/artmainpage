@@ -1,1 +1,226 @@
+<script>
+// img-1과 img-11을 제외한 인터랙티브 이미지들의 ID 목록
+const interactiveImageIds = [
+    'img-2', 'img-3', 'img-4', 'img-5', 'img-6', 
+    'img-7', 'img-8', 'img-9', 'img-10'
+];
 
+/**
+ * 클릭한 이미지(targetId)만 서브 이미지로 바꾸고, 
+ * 해당 텍스트 박스를 보여줍니다. 나머지는 초기화하고 숨깁니다.
+ */
+function toggleImage(targetId) {
+    interactiveImageIds.forEach(imageId => {
+        // 1. 이미지 처리
+        const imgElement = document.getElementById(imageId);
+        // 2. 텍스트 박스 처리 (ID 규칙: msg- + 이미지ID)
+        const msgElement = document.getElementById('msg-' + imageId);
+
+        if (!imgElement) return;
+
+        const mainSrc = imgElement.getAttribute('data-main-src');
+        const subSrc = imgElement.getAttribute('data-sub-src');
+
+        // alt 속성 정리
+        let currentAlt = imgElement.alt.replace('-main', '').replace('-sub', '');
+
+        if (imageId === targetId) {
+            // [선택된 상태]
+            // 이미지: 서브 이미지로 변경
+            imgElement.src = subSrc;
+            imgElement.alt = currentAlt + '-sub';
+            
+            // 텍스트 박스: 보이기
+            if (msgElement) {
+                msgElement.style.display = 'block';
+            }
+        } else {
+            // [선택되지 않은 나머지]
+            // 이미지: 메인 이미지로 변경
+            imgElement.src = mainSrc;
+            imgElement.alt = currentAlt + '-main';
+
+            // 텍스트 박스: 숨기기
+            if (msgElement) {
+                msgElement.style.display = 'none';
+            }
+        }
+    });
+}
+
+/**
+ * 페이지 로드 시 실행
+ * - img-2를 기본적으로 활성화(서브이미지+텍스트 노출)합니다.
+ */
+window.onload = function() {
+    toggleImage('img-2'); 
+};
+</script>
+
+<div style="max-width: 1180px; width: 100%; margin: 0 auto; font-size: 0; line-height: 0;">
+  <table style="width: 100%; border-collapse: collapse; border-spacing: 0; background-color: transparent; table-layout: fixed;">
+    <tbody>
+      <tr>
+        <td style="width: 4.83%; padding: 0; border: none; vertical-align: top;">
+          <img src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17654766230_Re.jpg" alt="img1" style="width: 100%; display: block; border: 0;">
+        </td>
+        
+        <td style="width: 9.24%; padding: 0; border: none; vertical-align: top;">
+          <img 
+            id="img-2"
+            src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17654766231_Re.jpg" 
+            alt="img2-main" 
+            style="width: 100%; display: block; border: 0; cursor: pointer;"
+            onclick="toggleImage('img-2')"
+            data-main-src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17654766231_Re.jpg" 
+            data-sub-src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17656677820_Re.jpg" 
+          >
+        </td>
+
+        <td style="width: 9.24%; padding: 0; border: none; vertical-align: top;">
+          <img 
+            id="img-3"
+            src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17654766232_Re.jpg" 
+            alt="img3-main" 
+            style="width: 100%; display: block; border: 0; cursor: pointer;"
+            onclick="toggleImage('img-3')"
+            data-main-src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17654766232_Re.jpg" 
+            data-sub-src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17656677821_Re.jpg" 
+          >
+        </td>
+
+        <td style="width: 9.24%; padding: 0; border: none; vertical-align: top;">
+          <img 
+            id="img-4"
+            src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17654766233_Re.jpg" 
+            alt="img4-main" 
+            style="width: 100%; display: block; border: 0; cursor: pointer;"
+            onclick="toggleImage('img-4')"
+            data-main-src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17654766233_Re.jpg" 
+            data-sub-src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17656677822_Re.jpg" 
+          >
+        </td>
+
+        <td style="width: 9.24%; padding: 0; border: none; vertical-align: top;">
+          <img 
+            id="img-5"
+            src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17654766234_Re.jpg" 
+            alt="img5-main" 
+            style="width: 100%; display: block; border: 0; cursor: pointer;"
+            onclick="toggleImage('img-5')"
+            data-main-src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17654766234_Re.jpg" 
+            data-sub-src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17656677823_Re.jpg" 
+          >
+        </td>
+
+        <td style="width: 9.24%; padding: 0; border: none; vertical-align: top;">
+          <img 
+            id="img-6"
+            src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17654766380_Re.jpg" 
+            alt="img6-main" 
+            style="width: 100%; display: block; border: 0; cursor: pointer;"
+            onclick="toggleImage('img-6')"
+            data-main-src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17654766380_Re.jpg" 
+            data-sub-src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17656677824_Re.jpg" 
+          >
+        </td>
+
+        <td style="width: 9.24%; padding: 0; border: none; vertical-align: top;">
+          <img 
+            id="img-7"
+            src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17654766381_Re.jpg" 
+            alt="img7-main" 
+            style="width: 100%; display: block; border: 0; cursor: pointer;"
+            onclick="toggleImage('img-7')"
+            data-main-src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17654766381_Re.jpg" 
+            data-sub-src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17656678120_Re.jpg" 
+          >
+        </td>
+
+        <td style="width: 9.24%; padding: 0; border: none; vertical-align: top;">
+          <img 
+            id="img-8"
+            src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17654766382_Re.jpg" 
+            alt="img8-main" 
+            style="width: 100%; display: block; border: 0; cursor: pointer;"
+            onclick="toggleImage('img-8')"
+            data-main-src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17654766382_Re.jpg" 
+            data-sub-src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17656678121_Re.jpg" 
+          >
+        </td>
+
+        <td style="width: 9.24%; padding: 0; border: none; vertical-align: top;">
+          <img 
+            id="img-9"
+            src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17654766383_Re.jpg" 
+            alt="img9-main" 
+            style="width: 100%; display: block; border: 0; cursor: pointer;"
+            onclick="toggleImage('img-9')"
+            data-main-src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17654766383_Re.jpg" 
+            data-sub-src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17656678122_Re.jpg" 
+          >
+        </td>
+
+        <td style="width: 9.24%; padding: 0; border: none; vertical-align: top;">
+          <img 
+            id="img-10"
+            src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17654766384_Re.jpg" 
+            alt="img10-main" 
+            style="width: 100%; display: block; border: 0; cursor: pointer;"
+            onclick="toggleImage('img-10')"
+            data-main-src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17654766384_Re.jpg" 
+            data-sub-src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17656678123_Re.jpg" 
+          >
+        </td>
+
+        <td style="width: 12.03%; padding: 0; border: none; vertical-align: top;">
+          <img src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17654766480_Re.jpg" alt="img11" style="width: 100%; display: block; border: 0;">
+        </td>
+      </tr>
+
+      <tr>
+        <td colspan="11" style="width: 100%; padding: 0; border: none; vertical-align: top;">
+          <img src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17654774790_Re.jpg" alt="Bottom Image" style="width: 100%; display: block; border: 0;">
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div style="max-width: 1180px; width: 100%; margin: 0 auto; text-align: center;">
+  <div id="msg-img-2" style="display: none; padding: 0px; background-color: #f0f0f0; margin-top: 0px; font-size: 16px; line-height: 1.5; color: #333;">
+    안녕하세요
+  </div>
+  
+  <div id="msg-img-3" style="display: none; padding: 0px; background-color: #f0f0f0; margin-top: 0px; font-size: 16px; line-height: 1.5; color: #333;">
+    안녕하세요
+  </div>
+
+  <div id="msg-img-4" style="display: none; padding: 0px; background-color: #f0f0f0; margin-top: 0px; font-size: 16px; line-height: 1.5; color: #333;">
+    안녕하세요
+  </div>
+
+  <div id="msg-img-5" style="display: none; padding: 0px; background-color: #f0f0f0; margin-top: 0px; font-size: 16px; line-height: 1.5; color: #333;">
+    안녕하세요
+  </div>
+
+  <div id="msg-img-6" style="display: none; padding: 0px; background-color: #f0f0f0; margin-top: 0px; font-size: 16px; line-height: 1.5; color: #333;">
+    안녕하세요
+  </div>
+
+  <div id="msg-img-7" style="display: none; padding: 0px; background-color: #f0f0f0; margin-top: 0px; font-size: 16px; line-height: 1.5; color: #333;">
+    안녕하세요
+  </div>
+
+  <div id="msg-img-8" style="display: none; padding: 0px; background-color: #f0f0f0; margin-top: 0px; font-size: 16px; line-height: 1.5; color: #333;">
+    안녕하세요
+  </div>
+
+  <div id="msg-img-9" style="display: none; padding: 0px; background-color: #f0f0f0; margin-top: 0px; font-size: 16px; line-height: 1.5; color: #333;">
+    안녕하세요
+  </div>
+
+  <div id="msg-img-10" style="display: none; padding: 0px; background-color: #f0f0f0; margin-top: 0px; font-size: 16px; line-height: 1.5; color: #333;">
+    안녕하세요
+  </div>
+</div>
