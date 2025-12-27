@@ -1,3 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>동백님 페이지</title>
+<style>
+    /* ------------------------------------------------------- */
+    /* [스타일 정의] 유튜브 및 이미지 갤러리 공통 스타일 */
+    /* ------------------------------------------------------- */
+    
+    /* 기존 탭 이미지 스타일 */
+    table { border-collapse: collapse; border-spacing: 0; }
+    img { display: block; border: 0; }
+
+    /* 유튜브 갤러리 스타일 */
+    .video-container {
+        max-width: 1180px; 
+        width: 100%; 
+        margin: 0 auto;
+    }
+    .video-table {
+        width: 100%; 
+        border-collapse: separate; 
+        border-spacing: 10px;      
+        border: 0;
+    }
+    .video-cell {
+        vertical-align: middle;
+        width: 50%; /* 2개씩 배치 */
+    }
+    .video-iframe {
+        width: 100%; 
+        aspect-ratio: 16/9; 
+        height: auto; 
+        display: block;
+        border: none;
+    }
+
+    /* 이모티콘 갤러리 스타일 */
+    .gallery-container {
+        max-width: 1180px; width: 100%; margin: 0 auto;
+    }
+    .gallery-table {
+        width: 100%; border-collapse: collapse; background-color: transparent; border-spacing: 0;
+    }
+    .gallery-cell {
+        width: 20%; padding: 0; border: none; vertical-align: top;
+    }
+    .gallery-img {
+        width: 100%; border: 2px solid white; display: block; box-sizing: border-box;
+    }
+</style>
+
 <script>
 // img-1과 img-11을 제외한 인터랙티브 이미지들의 ID 목록
 const interactiveImageIds = [
@@ -6,181 +59,89 @@ const interactiveImageIds = [
 ];
 
 /**
- * 클릭한 이미지(targetId)만 서브 이미지로 바꾸고, 
- * 해당 텍스트 박스를 보여줍니다. 나머지는 초기화하고 숨깁니다.
+ * 탭 클릭 기능
  */
 function toggleImage(targetId) {
     interactiveImageIds.forEach(imageId => {
-        // 1. 이미지 처리
         const imgElement = document.getElementById(imageId);
-        // 2. 텍스트 박스 처리 (ID 규칙: msg- + 이미지ID)
         const msgElement = document.getElementById('msg-' + imageId);
 
         if (!imgElement) return;
 
         const mainSrc = imgElement.getAttribute('data-main-src');
         const subSrc = imgElement.getAttribute('data-sub-src');
-
-        // alt 속성 정리
         let currentAlt = imgElement.alt.replace('-main', '').replace('-sub', '');
 
         if (imageId === targetId) {
-            // [선택된 상태]
-            // 이미지: 서브 이미지로 변경
+            // 활성화
             imgElement.src = subSrc;
             imgElement.alt = currentAlt + '-sub';
-            
-            // 텍스트 박스: 보이기
-            if (msgElement) {
-                msgElement.style.display = 'block';
-            }
+            if (msgElement) msgElement.style.display = 'block';
         } else {
-            // [선택되지 않은 나머지]
-            // 이미지: 메인 이미지로 변경
+            // 비활성화
             imgElement.src = mainSrc;
             imgElement.alt = currentAlt + '-main';
-
-            // 텍스트 박스: 숨기기
-            if (msgElement) {
-                msgElement.style.display = 'none';
-            }
+            if (msgElement) msgElement.style.display = 'none';
         }
     });
 }
 
 /**
- * 페이지 로드 시 실행
- * - img-2를 기본적으로 활성화(서브이미지+텍스트 노출)합니다.
+ * 페이지 로드 시 실행 (기본 탭 설정)
  */
 window.onload = function() {
-    toggleImage('img-2'); 
+    toggleImage('img-2'); // 기본적으로 img-2 활성화
+    
+    // 유튜브 갤러리 렌더링 실행 (SD, LD, 메모리얼)
+    renderAllYoutubeGalleries();
 };
 </script>
+</head>
+<body>
 
 <div style="max-width: 1180px; width: 100%; margin: 0 auto; font-size: 0; line-height: 0;">
   <table style="width: 100%; border-collapse: collapse; border-spacing: 0; background-color: transparent; table-layout: fixed;">
     <tbody>
       <tr>
         <td style="width: 4.83%; padding: 0; border: none; vertical-align: top;">
-          <img src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17654766230_Re.jpg" alt="img1" style="width: 100%; display: block; border: 0;">
+          <img src="https://tsubaki114.github.io/artmainpage/sample/1.png" alt="img1" style="width: 100%;">
         </td>
         
         <td style="width: 9.24%; padding: 0; border: none; vertical-align: top;">
-          <img 
-            id="img-2"
-            src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17654766231_Re.jpg" 
-            alt="img2-main" 
-            style="width: 100%; display: block; border: 0; cursor: pointer;"
-            onclick="toggleImage('img-2')"
-            data-main-src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17654766231_Re.jpg" 
-            data-sub-src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17656677820_Re.jpg" 
-          >
+          <img id="img-2" src="https://tsubaki114.github.io/artmainpage/sample/2.png" alt="img2-main" style="width: 100%; cursor: pointer;" onclick="toggleImage('img-2')" data-main-src="https://tsubaki114.github.io/artmainpage/sample/2.png" data-sub-src="https://tsubaki114.github.io/artmainpage/sample/2-1.png">
         </td>
-
         <td style="width: 9.24%; padding: 0; border: none; vertical-align: top;">
-          <img 
-            id="img-3"
-            src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17654766232_Re.jpg" 
-            alt="img3-main" 
-            style="width: 100%; display: block; border: 0; cursor: pointer;"
-            onclick="toggleImage('img-3')"
-            data-main-src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17654766232_Re.jpg" 
-            data-sub-src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17656677821_Re.jpg" 
-          >
+          <img id="img-3" src="https://tsubaki114.github.io/artmainpage/sample/3.png" alt="img3-main" style="width: 100%; cursor: pointer;" onclick="toggleImage('img-3')" data-main-src="https://tsubaki114.github.io/artmainpage/sample/3.png" data-sub-src="https://tsubaki114.github.io/artmainpage/sample/3-1.png">
         </td>
-
         <td style="width: 9.24%; padding: 0; border: none; vertical-align: top;">
-          <img 
-            id="img-4"
-            src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17654766233_Re.jpg" 
-            alt="img4-main" 
-            style="width: 100%; display: block; border: 0; cursor: pointer;"
-            onclick="toggleImage('img-4')"
-            data-main-src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17654766233_Re.jpg" 
-            data-sub-src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17656677822_Re.jpg" 
-          >
+          <img id="img-4" src="https://tsubaki114.github.io/artmainpage/sample/4.png" alt="img4-main" style="width: 100%; cursor: pointer;" onclick="toggleImage('img-4')" data-main-src="https://tsubaki114.github.io/artmainpage/sample/4.png" data-sub-src="https://tsubaki114.github.io/artmainpage/sample/4-1.png">
         </td>
-
         <td style="width: 9.24%; padding: 0; border: none; vertical-align: top;">
-          <img 
-            id="img-5"
-            src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17654766234_Re.jpg" 
-            alt="img5-main" 
-            style="width: 100%; display: block; border: 0; cursor: pointer;"
-            onclick="toggleImage('img-5')"
-            data-main-src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17654766234_Re.jpg" 
-            data-sub-src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17656677823_Re.jpg" 
-          >
+          <img id="img-5" src="https://tsubaki114.github.io/artmainpage/sample/5.png" alt="img5-main" style="width: 100%; cursor: pointer;" onclick="toggleImage('img-5')" data-main-src="https://tsubaki114.github.io/artmainpage/sample/5.png" data-sub-src="https://tsubaki114.github.io/artmainpage/sample/5-1.png">
         </td>
-
         <td style="width: 9.24%; padding: 0; border: none; vertical-align: top;">
-          <img 
-            id="img-6"
-            src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17654766380_Re.jpg" 
-            alt="img6-main" 
-            style="width: 100%; display: block; border: 0; cursor: pointer;"
-            onclick="toggleImage('img-6')"
-            data-main-src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17654766380_Re.jpg" 
-            data-sub-src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17656677824_Re.jpg" 
-          >
+          <img id="img-6" src="https://tsubaki114.github.io/artmainpage/sample/6.png" alt="img6-main" style="width: 100%; cursor: pointer;" onclick="toggleImage('img-6')" data-main-src="https://tsubaki114.github.io/artmainpage/sample/6.png" data-sub-src="https://tsubaki114.github.io/artmainpage/sample/6-1.png">
         </td>
-
         <td style="width: 9.24%; padding: 0; border: none; vertical-align: top;">
-          <img 
-            id="img-7"
-            src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17654766381_Re.jpg" 
-            alt="img7-main" 
-            style="width: 100%; display: block; border: 0; cursor: pointer;"
-            onclick="toggleImage('img-7')"
-            data-main-src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17654766381_Re.jpg" 
-            data-sub-src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17656678120_Re.jpg" 
-          >
+          <img id="img-7" src="https://tsubaki114.github.io/artmainpage/sample/7.png" alt="img7-main" style="width: 100%; cursor: pointer;" onclick="toggleImage('img-7')" data-main-src="https://tsubaki114.github.io/artmainpage/sample/7.png" data-sub-src="https://tsubaki114.github.io/artmainpage/sample/7-1.png">
         </td>
-
         <td style="width: 9.24%; padding: 0; border: none; vertical-align: top;">
-          <img 
-            id="img-8"
-            src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17654766382_Re.jpg" 
-            alt="img8-main" 
-            style="width: 100%; display: block; border: 0; cursor: pointer;"
-            onclick="toggleImage('img-8')"
-            data-main-src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17654766382_Re.jpg" 
-            data-sub-src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17656678121_Re.jpg" 
-          >
+          <img id="img-8" src="https://tsubaki114.github.io/artmainpage/sample/8.png" alt="img8-main" style="width: 100%; cursor: pointer;" onclick="toggleImage('img-8')" data-main-src="https://tsubaki114.github.io/artmainpage/sample/8.png" data-sub-src="https://tsubaki114.github.io/artmainpage/sample/8-1.png">
         </td>
-
         <td style="width: 9.24%; padding: 0; border: none; vertical-align: top;">
-          <img 
-            id="img-9"
-            src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17654766383_Re.jpg" 
-            alt="img9-main" 
-            style="width: 100%; display: block; border: 0; cursor: pointer;"
-            onclick="toggleImage('img-9')"
-            data-main-src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17654766383_Re.jpg" 
-            data-sub-src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17656678122_Re.jpg" 
-          >
+          <img id="img-9" src="https://tsubaki114.github.io/artmainpage/sample/9.png" alt="img9-main" style="width: 100%; cursor: pointer;" onclick="toggleImage('img-9')" data-main-src="https://tsubaki114.github.io/artmainpage/sample/9.png" data-sub-src="https://tsubaki114.github.io/artmainpage/sample/9-1.png">
         </td>
-
         <td style="width: 9.24%; padding: 0; border: none; vertical-align: top;">
-          <img 
-            id="img-10"
-            src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17654766384_Re.jpg" 
-            alt="img10-main" 
-            style="width: 100%; display: block; border: 0; cursor: pointer;"
-            onclick="toggleImage('img-10')"
-            data-main-src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17654766384_Re.jpg" 
-            data-sub-src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17656678123_Re.jpg" 
-          >
+          <img id="img-10" src="https://tsubaki114.github.io/artmainpage/sample/10.png" alt="img10-main" style="width: 100%; cursor: pointer;" onclick="toggleImage('img-10')" data-main-src="https://tsubaki114.github.io/artmainpage/sample/10.png" data-sub-src="https://tsubaki114.github.io/artmainpage/sample/10-1.png">
         </td>
 
         <td style="width: 12.03%; padding: 0; border: none; vertical-align: top;">
-          <img src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17654766480_Re.jpg" alt="img11" style="width: 100%; display: block; border: 0;">
+          <img src="https://tsubaki114.github.io/artmainpage/sample/11.png" alt="img11" style="width: 100%;">
         </td>
       </tr>
-
       <tr>
         <td colspan="11" style="width: 100%; padding: 0; border: none; vertical-align: top;">
-          <img src="https://artmugfile2.cafe24.com/image/up_img/detail/4/goods_46408/17654774790_Re.jpg" alt="Bottom Image" style="width: 100%; display: block; border: 0;">
+          <img src="https://tsubaki114.github.io/artmainpage/sample/12.png" alt="Bottom Image" style="width: 100%;">
         </td>
       </tr>
     </tbody>
@@ -188,39 +149,126 @@ window.onload = function() {
 </div>
 
 <div style="max-width: 1180px; width: 100%; margin: 0 auto; text-align: center;">
-  <div id="msg-img-2" style="display: none; padding: 0px; background-color: #f0f0f0; margin-top: 0px; font-size: 16px; line-height: 1.5; color: #333;">
-    안녕하세요
+
+  <div id="msg-img-2" style="display: none; padding: 0; background-color: #f0f0f0;">
+    <img src="https://tsubaki114.github.io/artmainpage/sample/2-2.png" alt="img2-content" style="width: 100%;">
   </div>
   
-  <div id="msg-img-3" style="display: none; padding: 0px; background-color: #f0f0f0; margin-top: 0px; font-size: 16px; line-height: 1.5; color: #333;">
-    안녕하세요
+  <div id="msg-img-3" style="display: none; padding: 0; background-color: #f0f0f0;">
+    <img src="https://tsubaki114.github.io/artmainpage/sample/3-2.png" alt="img3-content" style="width: 100%;">
   </div>
 
-  <div id="msg-img-4" style="display: none; padding: 0px; background-color: #f0f0f0; margin-top: 0px; font-size: 16px; line-height: 1.5; color: #333;">
-    안녕하세요
+  <div id="msg-img-4" style="display: none; padding: 0; background-color: #f0f0f0;">
+      <div id="sd-video-area" class="video-container"></div>
   </div>
 
-  <div id="msg-img-5" style="display: none; padding: 0px; background-color: #f0f0f0; margin-top: 0px; font-size: 16px; line-height: 1.5; color: #333;">
-    안녕하세요
+  <div id="msg-img-5" style="display: none; padding: 0; background-color: #f0f0f0;">
+      <div id="ld-video-area" class="video-container"></div>
   </div>
 
-  <div id="msg-img-6" style="display: none; padding: 0px; background-color: #f0f0f0; margin-top: 0px; font-size: 16px; line-height: 1.5; color: #333;">
-    안녕하세요
+  <div id="msg-img-6" style="display: none; padding: 0; background-color: #f0f0f0;">
+    <div id="gallery-area" class="gallery-container"></div>
+    <script>
+       const emoticonBaseUrl = "https://tsubaki114.github.io/artmainpage/sample/";
+       // 아래에 이모티콘 샘플 이름을 추가하거나 제거합니다
+       const emoticonFiles = ["박수.gif","배잡고 웃기.gif","빵딩이.gif","하트 들기.gif"];
+       
+       function renderEmoticons() {
+           let html = '<table class="gallery-table"><tbody><tr>';
+           emoticonFiles.forEach((filename, index) => {
+               const imgTag = `<img src="${emoticonBaseUrl}${filename}" class="gallery-img">`;
+               html += `<td class="gallery-cell">${imgTag}</td>`;
+               if ((index + 1) % 5 === 0 && index < emoticonFiles.length - 1) {
+                   html += '</tr><tr>';
+               }
+           });
+           html += '</tr></tbody></table>';
+           document.getElementById('gallery-area').innerHTML = html;
+       }
+       renderEmoticons();
+    </script>
   </div>
 
-  <div id="msg-img-7" style="display: none; padding: 0px; background-color: #f0f0f0; margin-top: 0px; font-size: 16px; line-height: 1.5; color: #333;">
-    안녕하세요
+  <div id="msg-img-7" style="display: none; padding: 0; background-color: #f0f0f0;">
+       <div id="memorial-video-area" class="video-container"></div>
   </div>
 
-  <div id="msg-img-8" style="display: none; padding: 0px; background-color: #f0f0f0; margin-top: 0px; font-size: 16px; line-height: 1.5; color: #333;">
-    안녕하세요
+  <div id="msg-img-8" style="display: none; padding: 0; background-color: #f0f0f0;">
+    <img src="https://tsubaki114.github.io/artmainpage/sample/8-2.png" alt="img8-content" style="width: 100%;">
   </div>
 
-  <div id="msg-img-9" style="display: none; padding: 0px; background-color: #f0f0f0; margin-top: 0px; font-size: 16px; line-height: 1.5; color: #333;">
-    안녕하세요
+  <div id="msg-img-9" style="display: none; padding: 0; background-color: #f0f0f0;">
+    <img src="https://tsubaki114.github.io/artmainpage/sample/9-2.png" alt="img9-content" style="width: 100%;">
   </div>
 
-  <div id="msg-img-10" style="display: none; padding: 0px; background-color: #f0f0f0; margin-top: 0px; font-size: 16px; line-height: 1.5; color: #333;">
-    안녕하세요
+  <div id="msg-img-10" style="display: none; padding: 0; background-color: #f0f0f0;">
+    <img src="https://tsubaki114.github.io/artmainpage/sample/10-2.png" alt="img10-content" style="width: 100%;">
   </div>
+
 </div>
+
+<script>
+    // =========================================================
+    // [데이터 정의 구간]
+    // 각 항목에 맞는 유튜브 ID들을 리스트에 넣어주세요.
+    // https://www.youtube.com/watch?v=mHam1onKTMM 유튜브 링크라면mHam1onKTMM 이 부분이 ID
+    // =========================================================
+
+    // (1) SD 영상 리스트
+    const sdYoutubeIds = [
+        "mHam1onKTMM", // 예시 영상 1
+        "XzHevoeTWrQ"  // 예시 영상 2
+    ];
+
+    // (2) LD 영상 리스트
+    const ldYoutubeIds = [
+        "XzHevoeTWrQ",
+        "XzHevoeTWrQ",
+        "XzHevoeTWrQ"
+    ];
+
+    // (3) 메모리얼 영상 리스트
+    const memorialYoutubeIds = [
+        "XzHevoeTWrQ"
+    ];
+
+    // =========================================================
+    // [기능 로직] (수정하지 않으셔도 됩니다)
+    // =========================================================
+
+    function renderYoutubeGallery(containerId, videoIds) {
+        const container = document.getElementById(containerId);
+        if (!container) return; // 해당 컨테이너가 없으면 패스
+
+        let html = '<table class="video-table"><tbody><tr align="center">';
+        
+        videoIds.forEach((id, index) => {
+            const iframeTag = `
+                <iframe 
+                    class="video-iframe" 
+                    src="https://www.youtube.com/embed/${id}?rel=0" 
+                    allowfullscreen>
+                </iframe>`;
+            
+            html += `<td class="video-cell">${iframeTag}</td>`;
+
+            // 2개마다 줄바꿈
+            if ((index + 1) % 2 === 0 && index < videoIds.length - 1) {
+                html += '</tr><tr align="center">';
+            }
+        });
+
+        html += '</tr></tbody></table>';
+        container.innerHTML = html;
+    }
+
+    // 모든 유튜브 갤러리를 한번에 그리는 함수
+    function renderAllYoutubeGalleries() {
+        renderYoutubeGallery('sd-video-area', sdYoutubeIds);
+        renderYoutubeGallery('ld-video-area', ldYoutubeIds);
+        renderYoutubeGallery('memorial-video-area', memorialYoutubeIds);
+    }
+</script>
+
+</body>
+</html>
